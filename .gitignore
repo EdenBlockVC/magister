@@ -1,0 +1,15 @@
+# Generated directories:
+.nyc_output/
+coverage/
+dist/
+node_modules/
+
+# Project files:
+*.sublime-*
+
+# 
+edenblockkeys.yml
+state.json
+
+# Secrets
+.env

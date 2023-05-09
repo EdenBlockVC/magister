@@ -1,0 +1,24 @@
+{
+  "name": "magister-locus",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "repository": "https://github.com/edenblockvc/magister-locus.git",
+  "author": "Daniel Luca <daniel@edenblock.com>",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "tsc",
+    "dev": "yarn run build && node dist/index.js",
+    "format": "prettier --write \"./src/**/*.{ts,tsx}\" --write \".github/\""
+  },
+  "dependencies": {
+    "@types/node": "^18.16.1",
+    "axios": "^1.3.6",
+    "dotenv": "^16.0.3",
+    "typescript": "^5.0.4"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.8"
+  }
+}
