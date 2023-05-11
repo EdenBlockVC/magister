@@ -26,7 +26,8 @@ async function main() {
 
     console.log("Objects: ", await endpoints.fetchContainerObjects('eden-block'));
 
-    console.log(await endpoints.fetchObject('eden-block', '00064-3078391179.png'));
+    await endpoints.uploadObject('eden-block', 'test-orig.png');
+    await endpoints.fetchObject('eden-block', 'test-orig.png', 'test-down.png');
 
     // const metadata = {
     //     "test": "test",

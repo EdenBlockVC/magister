@@ -6,6 +6,7 @@ export async function makeRequest(
     url: string,
     params?: Record<string, any>,
     headers?: Record<string, any>,
+    responseType?: 'arraybuffer' | 'stream' | 'json'
 ): Promise<AxiosResponse<any>> {
     try {
         const response = await axios({
@@ -14,11 +15,12 @@ export async function makeRequest(
             params: method === 'GET' || method === 'HEAD' ? params : undefined,
             data: method !== 'GET' && method !== 'HEAD' ? params : undefined,
             headers,
+            responseType,
         });
 
         return response;
     } catch (error) {
-        console.error(`Error making ${method} request to ${url}`, error);
+        console.error(`Error making ${method} request to ${url}`);
         throw error;
     }
 }

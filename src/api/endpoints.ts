@@ -85,15 +85,27 @@ export async function fetchContainerObjects(containerName: string) {
 
 import * as fs from 'fs/promises';
 
-export async function fetchObject(containerName: string, objectName: string) {
+export async function fetchObject(containerName: string, objectName: string, outputPath?: string | undefined) {
     const url = `${baseUrl}/${containerName}/${objectName}`;
     const response = await makeRequest('GET', url, {}, {
         'X-Auth-Token': authToken,
-    });
+    }, 'stream');
 
-    // Define the output file path
-    const outputPath = `./${objectName}`;
+    if (!outputPath) {
+        outputPath = objectName;
+    }
 
     // Write the response data to the file
-    await fs.writeFile(outputPath, response.data);
+    await fs.writeFile(outputPath, response.data, 'binary');
+}
+
+export async function uploadObject(containerName: string, objectName: string) {
+    // Read the file
+    const data = await fs.readFile(objectName);
+
+    const url = `${baseUrl}/${containerName}/${objectName}`;
+    const response = await makeRequest('PUT', url, data, {
+        'X-Auth-Token': authToken,
+    }, 'stream');
+    return response;
 }
