@@ -12,29 +12,70 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import { program } from 'commander';
+import chalk from 'chalk';
 import * as endpoints from "./api/endpoints";
+import * as config from "./utils/config";
 
 async function main() {
-    const containerCreated = await endpoints.createContainer("test-container");
-    console.log("Container created: ", containerCreated);
+    // Set program details
+    program.name('magister')
+        .version('0.0.1')
+        .description('A CLI tool for interacting with On Machina™️');
 
-    console.log(
-        await endpoints.fetchContainerInfo('test-container')
-    )
+    // Handle containers
+    program.command('container [containerName]')
+        .description('Create and switch to container')
+        .action(async (containerName) => {
+            if (containerName === undefined) {
+                // If no container name is provided, use the default container
+                const configData = await config.getConfig();
+                containerName = configData.defaultContainer;
+                console.log(chalk.blue("Using default container:", containerName));
+            }
 
-    console.log("Containers: ", await endpoints.fetchContainers());
+            // Check if the container already exists
+            const containers = await endpoints.fetchContainers();
+            if (containers.includes(containerName)) {
+                console.log(chalk.blue("Container already exists"));
+            } else {
+                const containerCreated = await endpoints.createContainer(containerName);
+                console.log(chalk.green("Container created:", containerCreated));
+            }
 
-    console.log("Objects: ", await endpoints.fetchContainerObjects('eden-block'));
+            // Set the default container
+            config.updateConfig({
+                defaultContainer: containerName
+            });
+        });
 
-    await endpoints.uploadObject('eden-block', 'test-orig.png');
-    await endpoints.fetchObject('eden-block', 'test-orig.png', 'test-down.png');
+    // Upload an object
+    program.command('upload <objectName>')
+        .description('Upload an object to the default container')
+        .action(async (objectName) => {
+            const defaultContainer = (await config.getConfig()).defaultContainer;
+            await endpoints.uploadObject(defaultContainer, objectName);
+        });
 
-    // const metadata = {
-    //     "test": "test",
-    //     "test2": "test2"
-    // };
-    // endpoints.updateAccountMetadata(metadata);
-    // console.log("Containers info: ", await endpoints.fetchContainersInfo());
+    // Download an object
+    program.command('download <objectName>')
+        .description('Download an object from the default container')
+        .action(async (objectName) => {
+            const defaultContainer = (await config.getConfig()).defaultContainer;
+            await endpoints.fetchObject(defaultContainer, objectName, objectName);
+        });
+
+    // List objects
+    program.command('list')
+        .description('List objects in the default container')
+        .action(async () => {
+            const defaultContainer = (await config.getConfig()).defaultContainer;
+            const objects = await endpoints.fetchObjectList(defaultContainer);
+            console.table(objects);
+        });
+
+    // Parse commands
+    program.parse();
 }
 
 main();

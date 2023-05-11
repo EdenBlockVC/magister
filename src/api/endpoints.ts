@@ -1,9 +1,8 @@
 // src/api/endpoints.ts
-import axios from 'axios';
+import * as fs from 'fs/promises';
+import * as mime from 'mime-types';
 import { makeRequest } from './client';
 import { baseUrl, authToken } from '.';
-
-const accountName = process.env.NEAR_ACCOUNT;
 
 async function parseContainers(data: any[]): Promise<string[]> {
     const containers: string[] = data.map((container): string => {
@@ -17,9 +16,11 @@ export async function fetchContainers() {
     const response = await makeRequest('GET', url, {}, {
         'X-Auth-Token': authToken,
     });
+
     return parseContainers(response.data);
 }
 
+// TODO: Implement
 export async function fetchContainersInfo() {
     const url = `${baseUrl}`;
     const response = await makeRequest('HEAD', url, {}, {
@@ -32,6 +33,7 @@ type ContainerMetadata = {
     [key: string]: string;
 };
 
+// TODO: Implement
 export async function updateAccountMetadata(metadata: ContainerMetadata) {
     const url = `${baseUrl}`;
 
@@ -50,7 +52,6 @@ export async function updateAccountMetadata(metadata: ContainerMetadata) {
 }
 
 // Containers
-
 export async function createContainer(containerName: string) {
     const url = `${baseUrl}/${containerName}`;
     const response = await makeRequest('PUT', url, {}, {
@@ -60,6 +61,7 @@ export async function createContainer(containerName: string) {
     return response.status === 201;
 }
 
+// TODO: Implement
 export async function fetchContainerInfo(containerName: string) {
     const url = `${baseUrl}/${containerName}`;
     const response = await makeRequest('HEAD', url, {}, {
@@ -74,8 +76,7 @@ export async function fetchContainerInfo(containerName: string) {
 }
 
 // Objects
-
-export async function fetchContainerObjects(containerName: string) {
+export async function fetchObjectList(containerName: string) {
     const url = `${baseUrl}/${containerName}`;
     const response = await makeRequest('GET', url, {}, {
         'X-Auth-Token': authToken,
@@ -83,7 +84,7 @@ export async function fetchContainerObjects(containerName: string) {
     return response.data;
 }
 
-import * as fs from 'fs/promises';
+
 
 export async function fetchObject(containerName: string, objectName: string, outputPath?: string | undefined) {
     const url = `${baseUrl}/${containerName}/${objectName}`;
@@ -102,10 +103,12 @@ export async function fetchObject(containerName: string, objectName: string, out
 export async function uploadObject(containerName: string, objectName: string) {
     // Read the file
     const data = await fs.readFile(objectName);
+    const mimeType = mime.lookup(objectName);
 
     const url = `${baseUrl}/${containerName}/${objectName}`;
     const response = await makeRequest('PUT', url, data, {
         'X-Auth-Token': authToken,
+        'Content-Type': mimeType,
     }, 'stream');
     return response;
 }

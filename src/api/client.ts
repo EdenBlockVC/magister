@@ -17,7 +17,6 @@ export async function makeRequest(
             headers,
             responseType,
         });
-
         return response;
     } catch (error) {
         console.error(`Error making ${method} request to ${url}`);
