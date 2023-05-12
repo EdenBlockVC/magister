@@ -1,24 +1,14 @@
 // src/api/endpoints.ts
-import * as fs from 'fs/promises';
-import * as mime from 'mime-types';
 import { makeRequest } from './client';
 import { baseUrl, authToken } from '.';
 
-async function parseContainers(data: any[]): Promise<string[]> {
-    const containers: string[] = data.map((container): string => {
-        return container.name;
-    });
-    return containers;
-}
+// Object management
+import { fetchObject, uploadObject, fetchObjectList, deleteObject, infoObject } from './objects';
+export { fetchObject, uploadObject, fetchObjectList, deleteObject, infoObject };
 
-export async function fetchContainers() {
-    const url = `${baseUrl}`;
-    const response = await makeRequest('GET', url, {}, {
-        'X-Auth-Token': authToken,
-    });
-
-    return parseContainers(response.data);
-}
+// Container management
+import { fetchContainers } from './containers';
+export { fetchContainers };
 
 // TODO: Implement
 export async function fetchContainersInfo() {
@@ -73,42 +63,4 @@ export async function fetchContainerInfo(containerName: string) {
     }
 
     return response.headers;
-}
-
-// Objects
-export async function fetchObjectList(containerName: string) {
-    const url = `${baseUrl}/${containerName}`;
-    const response = await makeRequest('GET', url, {}, {
-        'X-Auth-Token': authToken,
-    });
-    return response.data;
-}
-
-
-
-export async function fetchObject(containerName: string, objectName: string, outputPath?: string | undefined) {
-    const url = `${baseUrl}/${containerName}/${objectName}`;
-    const response = await makeRequest('GET', url, {}, {
-        'X-Auth-Token': authToken,
-    }, 'stream');
-
-    if (!outputPath) {
-        outputPath = objectName;
-    }
-
-    // Write the response data to the file
-    await fs.writeFile(outputPath, response.data, 'binary');
-}
-
-export async function uploadObject(containerName: string, objectName: string) {
-    // Read the file
-    const data = await fs.readFile(objectName);
-    const mimeType = mime.lookup(objectName);
-
-    const url = `${baseUrl}/${containerName}/${objectName}`;
-    const response = await makeRequest('PUT', url, data, {
-        'X-Auth-Token': authToken,
-        'Content-Type': mimeType,
-    }, 'stream');
-    return response;
 }

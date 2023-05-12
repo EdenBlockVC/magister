@@ -16,6 +16,9 @@ export async function makeRequest(
             data: method !== 'GET' && method !== 'HEAD' ? params : undefined,
             headers,
             responseType,
+            validateStatus: (status: number) => {
+                return true;
+            }
         });
         return response;
     } catch (error) {

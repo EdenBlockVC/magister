@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc",
     "postbuild": "node build/post-build.js",
-    "dev": "yarn run build && node dist/index.js",
+    "start": "yarn run build && node dist/index.js",
     "format": "prettier --write \"./src/**/*.{ts,tsx}\" --write \".github/\""
   },
   "dependencies": {

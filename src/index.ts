@@ -25,53 +25,96 @@ async function main() {
 
     // Handle containers
     program.command('container [containerName]')
+        .alias('c')
         .description('Create and switch to container')
         .action(async (containerName) => {
             if (containerName === undefined) {
                 // If no container name is provided, use the default container
                 const configData = await config.getConfig();
                 containerName = configData.defaultContainer;
-                console.log(chalk.blue("Using default container:", containerName));
+                console.log(chalk.blue("Using container:", containerName));
+                return;
             }
-
             // Check if the container already exists
             const containers = await endpoints.fetchContainers();
             if (containers.includes(containerName)) {
-                console.log(chalk.blue("Container already exists"));
+                console.log(chalk.blue(`Container exists: ${containerName}`));
             } else {
                 const containerCreated = await endpoints.createContainer(containerName);
-                console.log(chalk.green("Container created:", containerCreated));
+                console.log(chalk.green(`Container created: ${containerName}`));
             }
 
             // Set the default container
+            console.log(chalk.blue(`Using container: ${containerName}`));
             config.updateConfig({
                 defaultContainer: containerName
             });
         });
 
-    // Upload an object
-    program.command('upload <objectName>')
-        .description('Upload an object to the default container')
+    // Upload a file
+    program.command('upload <file>')
+        .alias('u')
+        .alias('up')
+        .description('Upload a file to the default container')
         .action(async (objectName) => {
             const defaultContainer = (await config.getConfig()).defaultContainer;
             await endpoints.uploadObject(defaultContainer, objectName);
         });
 
-    // Download an object
-    program.command('download <objectName>')
-        .description('Download an object from the default container')
+    // Download a file
+    program.command('download <file>')
+        .alias('d')
+        .alias('dl')
+        .alias('down')
+        .description('Download a file from the default container')
         .action(async (objectName) => {
             const defaultContainer = (await config.getConfig()).defaultContainer;
             await endpoints.fetchObject(defaultContainer, objectName, objectName);
         });
 
-    // List objects
+    // List files
     program.command('list')
+        .alias('ls')
         .description('List objects in the default container')
         .action(async () => {
             const defaultContainer = (await config.getConfig()).defaultContainer;
             const objects = await endpoints.fetchObjectList(defaultContainer);
             console.table(objects);
+        });
+
+    // Remove file
+    program.command('remove <file>')
+        .alias('rm')
+        .alias('del')
+        .alias('delete')
+        .description('Remove a file from the default container')
+        .action(async (objectName) => {
+            const defaultContainer = (await config.getConfig()).defaultContainer;
+            const deleted = await endpoints.deleteObject(defaultContainer, objectName);
+
+            if (deleted === false) {
+                console.log(chalk.red(`File not found: ${objectName} `));
+                return;
+            } else {
+                console.log(chalk.green(`File deleted: ${objectName} `));
+            }
+        });
+
+    // Get file info
+    program.command('info <file>')
+        .alias('i')
+        .alias('inf')
+        .alias('information')
+        .description('Get information about a file from the default container')
+        .action(async (objectName) => {
+            const defaultContainer = (await config.getConfig()).defaultContainer;
+            const info = await endpoints.infoObject(defaultContainer, objectName);
+            if (info === null) {
+                console.log(chalk.red(`File not found: ${objectName}`));
+                return;
+            }
+
+            console.table(info);
         });
 
     // Parse commands
