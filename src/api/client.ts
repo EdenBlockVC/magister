@@ -6,7 +6,7 @@ export async function makeRequest(
     url: string,
     params?: Record<string, any>,
     headers?: Record<string, any>,
-    responseType?: 'arraybuffer' | 'stream' | 'json'
+    responseType?: 'arraybuffer' | 'stream' | 'json',
 ): Promise<AxiosResponse<any>> {
     try {
         const response = await axios({
@@ -18,7 +18,7 @@ export async function makeRequest(
             responseType,
             validateStatus: (status: number) => {
                 return true;
-            }
+            },
         });
         return response;
     } catch (error) {

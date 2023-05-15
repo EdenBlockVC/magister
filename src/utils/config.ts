@@ -15,7 +15,7 @@ export async function createDefaultConfig() {
     if (!fs.existsSync(configFilePath)) {
         // If not, create it with some default configuration
         const defaultConfig = {
-            defaultContainer: 'magister'
+            defaultContainer: 'magister',
         };
 
         // Ensure the directory exists
@@ -55,7 +55,7 @@ export async function updateConfig(newConfig: any) {
     // Update the config
     const updatedConfig = {
         ...config,
-        ...newConfig
+        ...newConfig,
     };
 
     // Write the config file

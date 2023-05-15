@@ -13,9 +13,14 @@ export { fetchContainers };
 // TODO: Implement
 export async function fetchContainersInfo() {
     const url = `${baseUrl}`;
-    const response = await makeRequest('HEAD', url, {}, {
-        'X-Auth-Token': authToken,
-    });
+    const response = await makeRequest(
+        'HEAD',
+        url,
+        {},
+        {
+            'X-Auth-Token': authToken,
+        },
+    );
     return response;
 }
 
@@ -34,29 +39,44 @@ export async function updateAccountMetadata(metadata: ContainerMetadata) {
         headers[`X-Account-Meta-${key}`] = metadata[key];
     }
 
-    const response = await makeRequest('HEAD', url, {}, {
-        'X-Auth-Token': authToken,
-        ...headers
-    });
+    const response = await makeRequest(
+        'HEAD',
+        url,
+        {},
+        {
+            'X-Auth-Token': authToken,
+            ...headers,
+        },
+    );
     return response;
 }
 
 // Containers
 export async function createContainer(containerName: string) {
     const url = `${baseUrl}/${containerName}`;
-    const response = await makeRequest('PUT', url, {}, {
-        'X-Auth-Token': authToken,
-        'X-Container-Meta-Book': 'beep boop',
-    });
+    const response = await makeRequest(
+        'PUT',
+        url,
+        {},
+        {
+            'X-Auth-Token': authToken,
+            'X-Container-Meta-Book': 'beep boop',
+        },
+    );
     return response.status === 201;
 }
 
 // TODO: Implement
 export async function fetchContainerInfo(containerName: string) {
     const url = `${baseUrl}/${containerName}`;
-    const response = await makeRequest('HEAD', url, {}, {
-        'X-Auth-Token': authToken,
-    });
+    const response = await makeRequest(
+        'HEAD',
+        url,
+        {},
+        {
+            'X-Auth-Token': authToken,
+        },
+    );
 
     if (response.status === 404) {
         throw new Error(`Container ${containerName} not found`);
