@@ -58,3 +58,11 @@ Get info about a file in the current container.
 ```console
 yarn start info <object-name>
 ```
+
+### Speedtest
+
+Test the upload and download speed.
+
+```console
+yarn start speedtest
+```
