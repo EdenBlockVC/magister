@@ -10,9 +10,14 @@ async function parseContainers(data: any[]): Promise<string[]> {
 
 export async function fetchContainers() {
     const url = `${baseUrl}`;
-    const response = await makeRequest('GET', url, {}, {
-        'X-Auth-Token': authToken,
-    });
+    const response = await makeRequest(
+        'GET',
+        url,
+        {},
+        {
+            'X-Auth-Token': authToken,
+        },
+    );
 
     return parseContainers(response.data);
 }
