@@ -16,6 +16,7 @@ import { program } from 'commander';
 import chalk from 'chalk';
 import * as endpoints from "./api/endpoints";
 import * as config from "./utils/config";
+import * as speedtest from "./utils/speedtest";
 
 async function main() {
     // Set program details
@@ -116,6 +117,36 @@ async function main() {
 
             console.table(info);
         });
+
+    // Speed test
+    program.command('speedtest')
+        .alias('st')
+        .description('Test upload and download speed')
+        .option('-s, --size <filesize>', 'file size to test with', '104857600')
+        .action(async () => {
+            const defaultContainer = (await config.getConfig()).defaultContainer;
+
+            // console.log(program.opts());
+
+            const fileSize: number = 1024 * 1024 * 10;
+            // const fileSize: number = program.opts().size as number;
+            // console.log(fileSize);
+
+            console.log(chalk.blue(`Testing speed with file size: ${(fileSize / 1024 / 1024).toFixed(2)}MB`));
+
+            console.log(chalk.blue('Testing upload speed...'));
+            const uploadStats = await speedtest.speedTestUpload(defaultContainer, fileSize);
+            console.log(chalk.blue('Upload complete!'));
+            console.log(chalk.blue(`Upload speed: ${uploadStats.speedPretty}`))
+            console.log(chalk.blue(`Time elapsed: ${uploadStats.timeElapsedPretty}`))
+
+            console.log(chalk.blue('Testing download speed...'));
+            const downloadStats = await speedtest.speedTestDownload(defaultContainer, fileSize);
+            console.log(chalk.blue('Download complete!'));
+            console.log(chalk.blue(`Download speed: ${downloadStats.speedPretty}`))
+            console.log(chalk.blue(`Time elapsed: ${downloadStats.timeElapsedPretty}`))
+        });
+
 
     // Parse commands
     program.parse();

@@ -31,7 +31,7 @@ export async function uploadObject(containerName: string, objectName: string, ov
     const response = await makeRequest('PUT', url, data, {
         'X-Auth-Token': authToken,
         'Content-Type': mimeType,
-    }, 'stream');
+    }, 'arraybuffer');
     return response.status === 201;
 }
 
