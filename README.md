@@ -1,4 +1,4 @@
-# Magister Locus
+# Magister
 
 CLI tool for OnMachina™️
 
