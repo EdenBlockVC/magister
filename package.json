@@ -14,7 +14,7 @@
   "dependencies": {
     "@types/chalk": "^2.2.0",
     "@types/mime-types": "^2.1.4",
-    "@types/node": "^20.9.1",
+    "@types/node": "^20.9.2",
     "axios": "^1.6.2",
     "chalk": "4",
     "commander": "^11.1.0",
