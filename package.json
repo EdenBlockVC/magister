@@ -15,7 +15,7 @@
     "@types/chalk": "^2.2.0",
     "@types/mime-types": "^2.1.4",
     "@types/node": "^20.11.6",
-    "axios": "^1.6.5",
+    "axios": "^1.6.6",
     "chalk": "4",
     "commander": "^11.1.0",
     "dotenv": "^16.4.0",
