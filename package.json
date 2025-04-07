@@ -22,7 +22,7 @@
     "mime-types": "^2.1.35",
     "pretty-bytes": "^6.1.1",
     "shelljs": "^0.9.2",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
     "eslint-config-prettier": "^9.1.0",
