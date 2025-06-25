@@ -17,7 +17,7 @@
     "@types/node": "^20.14.12",
     "axios": "^1.10.0",
     "chalk": "4",
-    "commander": "^11.1.0",
+    "commander": "^14.0.0",
     "dotenv": "^16.5.0",
     "mime-types": "^2.1.35",
     "pretty-bytes": "^6.1.1",
