@@ -18,7 +18,7 @@
     "axios": "^1.10.0",
     "chalk": "4",
     "commander": "^11.1.0",
-    "dotenv": "^16.5.0",
+    "dotenv": "^16.6.0",
     "mime-types": "^2.1.35",
     "pretty-bytes": "^6.1.1",
     "shelljs": "^0.10.0",
