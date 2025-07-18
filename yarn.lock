@@ -131,10 +131,10 @@ dotenv@^16.6.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.6.0.tgz#b96bd4e7c2043ba5f51cbe1b8f9347850c864850"
   integrity sha512-Omf1L8paOy2VJhILjyhrhqwLIdstqm1BvcDPKg4NGAlkwEu9ODyrFbvk8UymUOMCT+HXo31jg1lArIrVAAhuGA==
 
-eslint-config-prettier@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-9.1.0.tgz#31af3d94578645966c082fcb71a5846d3c94867f"
-  integrity sha512-NSWl5BFQWEPi1j4TjVNItzYV7dZXZ+wP6I6ZhrBGpChQhZRUaElihE9uRRkcbRnNb76UMKDF3r+WTmNcGPKsqw==
+eslint-config-prettier@^10.1.6:
+  version "10.1.6"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-10.1.6.tgz#73e443eee02edff78d3ab963f354a626f66fc982"
+  integrity sha512-Xk/r4tj3A2i7rEdJwzuh9k5dbEWDKkJID1Po3FNKugqXLlrPTUdPup8drOtfw4sXZxBGnk2SudEMTbEFYhwDIw==
 
 eslint-plugin-prettier@^5.5.1:
   version "5.5.1"
