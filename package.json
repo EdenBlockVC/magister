@@ -20,7 +20,7 @@
     "commander": "^11.1.0",
     "dotenv": "^16.6.0",
     "mime-types": "^2.1.35",
-    "pretty-bytes": "^6.1.1",
+    "pretty-bytes": "^7.0.1",
     "shelljs": "^0.10.0",
     "typescript": "^5.9.2"
   },
