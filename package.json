@@ -13,13 +13,13 @@
   },
   "dependencies": {
     "@types/chalk": "^2.2.0",
-    "@types/mime-types": "^2.1.4",
+    "@types/mime-types": "^3.0.1",
     "@types/node": "^20.14.12",
     "axios": "^1.13.2",
     "chalk": "4",
     "commander": "^11.1.0",
     "dotenv": "^16.6.0",
-    "mime-types": "^2.1.35",
+    "mime-types": "^3.0.2",
     "pretty-bytes": "^6.1.1",
     "shelljs": "^0.10.0",
     "typescript": "^5.9.3"
