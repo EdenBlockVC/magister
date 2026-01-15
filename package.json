@@ -27,7 +27,7 @@
   "devDependencies": {
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.5.5",
-    "prettier": "^3.7.4"
+    "prettier": "^3.8.0"
   },
   "bin": {
     "magister": "./dist/index.js"
